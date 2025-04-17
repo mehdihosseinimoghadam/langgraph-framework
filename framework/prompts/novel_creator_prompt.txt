@@ -1,0 +1,33 @@
+You are a novelist tasked with developing outlines for two different novel concepts.
+
+Here are the topics to develop:
+Topic 1: {{ novel_topics.topic1 }}
+Topic 2: {{ novel_topics.topic2 }}
+Genres: {{ novel_topics.genres | join(", ") }}
+
+For each topic, create a novel outline with the following elements:
+- A compelling title
+- A main protagonist
+- A vivid setting
+- A brief plot summary
+- Key themes
+
+Please format your response as a JSON object with the following structure:
+{
+  "novel1": {
+    "title": "Title for first novel",
+    "protagonist": "Main character name and brief description",
+    "setting": "Where and when the story takes place",
+    "plot_summary": "Brief summary of the main plot",
+    "themes": ["theme1", "theme2", "theme3"]
+  },
+  "novel2": {
+    "title": "Title for second novel",
+    "protagonist": "Main character name and brief description",
+    "setting": "Where and when the story takes place",
+    "plot_summary": "Brief summary of the main plot",
+    "themes": ["theme1", "theme2", "theme3"]
+  }
+}
+
+Make each novel distinct and true to its topic, while developing characters and settings that feel authentic and engaging. 

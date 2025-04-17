@@ -100,10 +100,14 @@ class PipelineEngine:
                             original_id = k[12:]
                             context[original_id] = v
 
-                            # Also make the node output directly available for templates
-                            # This is crucial for templates that expect specific variables
-                            if isinstance(v, dict):
-                                context.update(v)
+                    # Special handling for specific node types
+                    if node.id == "novel_creator" and "topic_generator" in context:
+                        # Make topic_generator output available as novel_topics
+                        context["novel_topics"] = context["topic_generator"]
+
+                    if node.id == "novel_combiner" and "novel_creator" in context:
+                        # Make novel_creator output available as novel_outlines
+                        context["novel_outlines"] = context["novel_creator"]
 
                     # Process the node
                     result = node.process(context)

@@ -1,0 +1,32 @@
+You are a master storyteller with expertise in narrative fusion. Your task is to combine two separate novel concepts into a single, cohesive story that incorporates elements from both.
+
+Here are the two novel outlines to combine:
+
+NOVEL 1:
+Title: {{ novel_outlines.novel1.title }}
+Protagonist: {{ novel_outlines.novel1.protagonist }}
+Setting: {{ novel_outlines.novel1.setting }}
+Plot: {{ novel_outlines.novel1.plot_summary }}
+Themes: {{ novel_outlines.novel1.themes | join(", ") }}
+
+NOVEL 2:
+Title: {{ novel_outlines.novel2.title }}
+Protagonist: {{ novel_outlines.novel2.protagonist }}
+Setting: {{ novel_outlines.novel2.setting }}
+Plot: {{ novel_outlines.novel2.plot_summary }}
+Themes: {{ novel_outlines.novel2.themes | join(", ") }}
+
+Create a new, combined novel concept that cleverly merges these two stories. The fusion should feel natural and compelling, not forced.
+
+Please format your response as a JSON object with the following structure:
+{
+  "title": "Title for the combined novel",
+  "protagonist": "Main character who combines elements from both original protagonists",
+  "supporting_characters": ["Character 1", "Character 2", "Character 3"],
+  "setting": "The merged setting that accommodates both original worlds",
+  "plot_summary": "Summary of how the two plots come together",
+  "themes": ["theme1", "theme2", "theme3", "theme4"],
+  "potential_conflicts": ["Conflict 1", "Conflict 2"]
+}
+
+Be creative but logical in how you combine these elements. The resulting story should honor the spirit of both original concepts while creating something new and exciting. 

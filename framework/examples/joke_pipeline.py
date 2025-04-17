@@ -12,7 +12,7 @@ joke_pipeline_config = {
     "description": "Generates and critiques jokes on a given topic",
 
     "settings": {
-        "default_model": "gpt-3.5-turbo",
+        "default_model": "gpt-4o-mini",
         "cache_enabled": True,
         "max_retries": 2
     },
@@ -31,7 +31,7 @@ joke_pipeline_config = {
             "id": "joke_generator",
             "role": "Generate a joke about a topic",
             "type": "llm",
-            "model": "gpt-3.5-turbo",
+            "model": "gpt-4o-mini",
             "temperature": 0.9,
             "prompt_template": os.path.join(FRAMEWORK_DIR, "prompts", "joke_prompt.txt"),
             "output": {
@@ -43,7 +43,7 @@ joke_pipeline_config = {
             "id": "joke_critic",
             "role": "Critique the joke",
             "type": "llm",
-            "model": "gpt-3.5-turbo",
+            "model": "gpt-4o-mini",
             "temperature": 0.6,
             "prompt_template": os.path.join(FRAMEWORK_DIR, "prompts", "critic_prompt.txt"),
             "output": {

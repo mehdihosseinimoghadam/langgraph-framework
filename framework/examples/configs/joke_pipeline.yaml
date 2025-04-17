@@ -7,7 +7,7 @@ inputs:
 name: Joke Generator Pipeline
 nodes:
 - id: joke_generator
-  model: gpt-3.5-turbo
+  model: gpt-4o-mini
   output:
     schema: framework.schemas.joke.JokeOutput
     type: pydantic
@@ -16,7 +16,7 @@ nodes:
   temperature: 0.9
   type: llm
 - id: joke_critic
-  model: gpt-3.5-turbo
+  model: gpt-4o-mini
   output:
     type: raw
   prompt_template: /Users/mehdihm/langgraph-framework/langgraph-framework/framework/prompts/critic_prompt.txt
@@ -35,6 +35,6 @@ output:
   log_status: '{{ joke_logger }}'
 settings:
   cache_enabled: true
-  default_model: gpt-3.5-turbo
+  default_model: gpt-4o-mini
   max_retries: 2
 version: '1.0'

@@ -1,0 +1,38 @@
+description: Generates novel topics, creates outlines, and combines them
+name: Novel Generator Pipeline
+nodes:
+- id: topic_generator
+  model: gpt-3.5-turbo
+  output:
+    schema: framework.schemas.novel.NovelTopics
+    type: pydantic
+  prompt_template: /Users/mehdihm/langgraph-framework/langgraph-framework/framework/prompts/topic_generator_prompt.txt
+  role: Generate novel topics
+  temperature: 0.9
+  type: llm
+- id: novel_creator
+  model: gpt-3.5-turbo
+  output:
+    type: json
+  prompt_template: /Users/mehdihm/langgraph-framework/langgraph-framework/framework/prompts/novel_creator_prompt.txt
+  role: Create novel outlines
+  temperature: 0.8
+  type: llm
+- id: novel_combiner
+  model: gpt-3.5-turbo
+  output:
+    schema: framework.schemas.novel.CombinedNovel
+    type: pydantic
+  prompt_template: /Users/mehdihm/langgraph-framework/langgraph-framework/framework/prompts/novel_combiner_prompt.txt
+  role: Combine the novels
+  temperature: 0.7
+  type: llm
+output:
+  combined_novel: '{{ novel_combiner }}'
+  outlines: '{{ novel_creator }}'
+  topics: '{{ topic_generator }}'
+settings:
+  cache_enabled: true
+  default_model: gpt-3.5-turbo
+  max_retries: 2
+version: '1.0'
