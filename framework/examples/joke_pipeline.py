@@ -1,6 +1,7 @@
 import os
 import yaml
 from typing import Dict, Any
+from framework.integrations.langfuse_integration import LangfuseTracer
 
 # Get the absolute path to the framework directory
 FRAMEWORK_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -97,9 +98,17 @@ def run_joke_pipeline(topic: str, thread_id: str = "default"):
     # Create the pipeline engine
     engine = PipelineEngine(config)
 
-    # Run the pipeline
+    # Initialize Langfuse tracer
+    tracer = LangfuseTracer(session_id="joke_pipeline",
+                            user_id=f"user_{thread_id}")
+    langfuse_handler = tracer.get_callback_handler()
+
+    # Run the pipeline with Langfuse tracing
     result = engine.run(
-        {"user_input": f"Tell me a joke about {topic}", "topic": topic}, thread_id)
+        {"user_input": f"Tell me a joke about {topic}", "topic": topic},
+        thread_id=thread_id,
+        callbacks=[langfuse_handler] if langfuse_handler else None
+    )
 
     return result
 
@@ -119,6 +128,15 @@ def stream_joke_pipeline(topic: str, thread_id: str = "default"):
     # Create the pipeline engine
     engine = PipelineEngine(config)
 
-    # Stream the pipeline execution
-    for event in engine.stream({"user_input": f"Tell me a joke about {topic}", "topic": topic}, thread_id):
+    # Initialize Langfuse tracer
+    tracer = LangfuseTracer(session_id="joke_pipeline",
+                            user_id=f"user_{thread_id}")
+    langfuse_handler = tracer.get_callback_handler()
+
+    # Stream the pipeline execution with Langfuse tracing
+    for event in engine.stream(
+        {"user_input": f"Tell me a joke about {topic}", "topic": topic},
+        thread_id=thread_id,
+        callbacks=[langfuse_handler] if langfuse_handler else None
+    ):
         yield event

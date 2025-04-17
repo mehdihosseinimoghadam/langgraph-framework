@@ -160,7 +160,7 @@ class PipelineEngine:
         self.graph = graph_builder.compile(checkpointer=self.checkpointer)
         return self.graph
 
-    def run(self, inputs: Dict[str, Any], thread_id: str = "default"):
+    def run(self, inputs: Dict[str, Any], thread_id: str = "default", callbacks=None):
         """Run the pipeline with the given inputs."""
         if not self.graph:
             self.build_graph()
@@ -171,8 +171,12 @@ class PipelineEngine:
             "inputs": inputs  # Store all inputs in a dedicated field
         }
 
-        # Run the graph
+        # Set up configuration with callbacks
         config = {"configurable": {"thread_id": thread_id}}
+        if callbacks:
+            config["callbacks"] = callbacks
+
+        # Run the graph
         result = self.graph.invoke(initial_state, config)
 
         # Process the result to extract node outputs
@@ -187,7 +191,7 @@ class PipelineEngine:
 
         return processed_result
 
-    def stream(self, inputs: Dict[str, Any], thread_id: str = "default"):
+    def stream(self, inputs: Dict[str, Any], thread_id: str = "default", callbacks=None):
         """Stream the pipeline execution with the given inputs."""
         if not self.graph:
             self.build_graph()
@@ -198,8 +202,12 @@ class PipelineEngine:
             "inputs": inputs  # Store all inputs in a dedicated field
         }
 
-        # Stream the graph execution
+        # Set up configuration with callbacks
         config = {"configurable": {"thread_id": thread_id}}
+        if callbacks:
+            config["callbacks"] = callbacks
+
+        # Stream the graph execution
         for event in self.graph.stream(initial_state, config, stream_mode="values"):
             # Process the event to extract node outputs
             processed_event = {}

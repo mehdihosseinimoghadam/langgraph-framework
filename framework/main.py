@@ -45,7 +45,20 @@ def main():
     example_parser.add_argument(
         "--stream", "-s", action="store_true", help="Stream the execution")
 
+    # Add Langfuse configuration options
+    parser.add_argument("--langfuse-public-key", help="Langfuse public key")
+    parser.add_argument("--langfuse-secret-key", help="Langfuse secret key")
+    parser.add_argument("--langfuse-host", help="Langfuse host URL")
+
     args = parser.parse_args()
+
+    # Set Langfuse environment variables if provided
+    if args.langfuse_public_key:
+        os.environ["LANGFUSE_PUBLIC_KEY"] = args.langfuse_public_key
+    if args.langfuse_secret_key:
+        os.environ["LANGFUSE_SECRET_KEY"] = args.langfuse_secret_key
+    if args.langfuse_host:
+        os.environ["LANGFUSE_HOST"] = args.langfuse_host
 
     # Handle commands
     if args.command == "run":
