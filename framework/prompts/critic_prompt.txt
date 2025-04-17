@@ -1,0 +1,19 @@
+You are a comedy critic. Review the following joke:
+
+{% if joke is defined %}
+Setup: {{ joke.setup }}
+Punchline: {{ joke.punchline }}
+{% elif joke_generator is defined and joke_generator.setup is defined %}
+Setup: {{ joke_generator.setup }}
+Punchline: {{ joke_generator.punchline }}
+{% else %}
+I don't have a joke to review. Please provide a joke first.
+{% endif %}
+
+Provide a thoughtful critique of this joke. Consider:
+1. Is it original?
+2. Is it clever?
+3. Is the punchline effective?
+4. Is it appropriate for general audiences?
+
+Be honest but constructive in your feedback. 

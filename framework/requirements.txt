@@ -1,0 +1,7 @@
+langgraph
+pydantic
+openai
+jinja2
+langchain
+langchain-openai
+langchain-anthropic

@@ -1,0 +1,40 @@
+description: Generates and critiques jokes on a given topic
+inputs:
+- description: Topic for the joke
+  name: topic
+  required: true
+  type: string
+name: Joke Generator Pipeline
+nodes:
+- id: joke_generator
+  model: gpt-3.5-turbo
+  output:
+    schema: framework.schemas.joke.JokeOutput
+    type: pydantic
+  prompt_template: /Users/mehdihm/langgraph-framework/langgraph-framework/framework/prompts/joke_prompt.txt
+  role: Generate a joke about a topic
+  temperature: 0.9
+  type: llm
+- id: joke_critic
+  model: gpt-3.5-turbo
+  output:
+    type: raw
+  prompt_template: /Users/mehdihm/langgraph-framework/langgraph-framework/framework/prompts/critic_prompt.txt
+  role: Critique the joke
+  temperature: 0.6
+  type: llm
+- id: joke_logger
+  output:
+    type: raw
+  role: Log the joke and critique
+  tool: framework.tools.file_logger.log_output
+  type: tool
+output:
+  critique: '{{ joke_critic }}'
+  joke: '{{ joke_generator }}'
+  log_status: '{{ joke_logger }}'
+settings:
+  cache_enabled: true
+  default_model: gpt-3.5-turbo
+  max_retries: 2
+version: '1.0'
